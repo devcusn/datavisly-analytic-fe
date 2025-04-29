@@ -34,7 +34,7 @@ const SignUpPage: React.FunctionComponent = () => {
   return (
     <div className="flex justify-center  h-screen bg-gray-100">
       <div className="flex flex-col items-center w-full p-8  mt-12 ">
-        <h1 className="text-3xl  font-bold text-center mb-6">
+        <h1 className="text-3xl  font-bold text-gray-900  text-center mb-6">
           Register for free
         </h1>
         <div className="w-full max-w-md  p-8 bg-white rounded-lg shadow-md">
@@ -124,12 +124,12 @@ const SignUpPage: React.FunctionComponent = () => {
                   Remember me
                 </label>
               </div>
-              <a
+              <Link
                 href="/forgot-password"
                 className="text-sm text-blue-600 hover:underline"
               >
                 Forgot password?
-              </a>
+              </Link>
             </div>
 
             <button
