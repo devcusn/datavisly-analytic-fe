@@ -1,4 +1,4 @@
 const SettingPage = () => {
-  return <div>Settings Page</div>;
+  return <div>Website Settings </div>;
 };
 export default SettingPage;
