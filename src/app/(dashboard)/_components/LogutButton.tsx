@@ -1,6 +1,6 @@
 "use client";
 
-import { logout } from "@/actions/logout";
+import { logout } from "@/services/auth/endpoints";
 import { useRouter } from "next/navigation";
 
 export default function LogoutButton() {
