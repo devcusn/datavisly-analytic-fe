@@ -2,12 +2,14 @@
 import { useState } from "react";
 import Link from "next/link";
 import { loginUser } from "@/services/auth/endpoints";
+import { useRouter } from "next/navigation";
 
 const LoginPage: React.FunctionComponent = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -15,14 +17,9 @@ const LoginPage: React.FunctionComponent = () => {
     setLoading(true);
 
     try {
-      // Replace this with your actual login API call
-      // For example: await loginUser(email, password);
-      console.log("Logging in with:", email, password);
       const res = await loginUser({ email, password });
-      console.log("Login successful:", res);
-
-      // Redirect after successful login
-      // window.location.href = "/dashboard";
+      console.log(res);
+      router.push("/sites");
     } catch (err) {
       console.log("Login error:", err);
       setError("Invalid email or password");

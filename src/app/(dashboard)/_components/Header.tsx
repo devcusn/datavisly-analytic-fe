@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Logo from "@/assets/img/logo.png";
 import Link from "next/link";
+import LogoutButton from "./LogutButton";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -54,9 +55,7 @@ const Header = () => {
             </Link>
 
             <div className="border-t border-slate-700">
-              <div className="px-4 py-3 text-white hover:bg-slate-700 cursor-pointer">
-                Log Out
-              </div>
+              <LogoutButton />
             </div>
           </div>
         )}
