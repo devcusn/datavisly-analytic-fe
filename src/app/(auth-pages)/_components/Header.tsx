@@ -5,7 +5,7 @@ import Link from "next/link";
 const Header = () => {
   return (
     <div className="max-w-6xl flex items-center mx-auto justify-between p-6 text-white">
-      <Link href="/login">
+      <Link href="/">
         <div className="flex items-center text-2xl font-bold cursor-pointer">
           <Image width={60} src={Logo} alt="logo" />
           Datavisly
