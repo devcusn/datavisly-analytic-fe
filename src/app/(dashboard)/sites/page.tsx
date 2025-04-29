@@ -14,9 +14,7 @@ const SitesPage = () => {
     <div className="flex flex-col w-full max-w-6xl mx-auto px-4 py-8">
       {/* My Personal Sites header area */}
       <div className="flex flex-col w-full mb-8">
-        <h1 className="text-3xl font-bold text-white mb-4">
-          My Personal Sites
-        </h1>
+        <h1 className="text-3xl font-bold text-white mb-4">My Sites</h1>
         <div className="h-px w-full bg-gray-700 mb-6"></div>
 
         <div className="flex justify-between items-center w-full">
@@ -31,10 +29,13 @@ const SitesPage = () => {
             />
           </div>
 
-          <button className="bg-[#ff6100] cursor-pointer hover:bg-orange-700 text-white px-4 py-2 rounded-md flex items-center">
+          <Link
+            href={"/sites/setup"}
+            className="bg-[#ff6100] cursor-pointer hover:bg-orange-700 text-white px-4 py-2 rounded-md flex items-center"
+          >
             <span className="mr-1">+</span>
             Add Website
-          </button>
+          </Link>
         </div>
       </div>
 
