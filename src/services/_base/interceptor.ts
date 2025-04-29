@@ -10,6 +10,7 @@ class AxiosInterceptor {
 
   constructor(baseURL: string) {
     this.api = this.createInstance(baseURL);
+    this.api.defaults.withCredentials = true;
     this.setupInterceptors();
   }
 
