@@ -124,12 +124,12 @@ const SignUpPage: React.FunctionComponent = () => {
                   Remember me
                 </label>
               </div>
-              <a
+              <Link
                 href="/forgot-password"
                 className="text-sm text-blue-600 hover:underline"
               >
                 Forgot password?
-              </a>
+              </Link>
             </div>
 
             <button
