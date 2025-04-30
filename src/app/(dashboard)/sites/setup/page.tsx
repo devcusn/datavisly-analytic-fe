@@ -1,10 +1,18 @@
 "use client";
+import { addWebsite } from "@/services/website/endpoints";
 import { useState } from "react";
 
 const AddWebsitePage = () => {
   const [domain, setDomain] = useState("");
   const [timezone, setTimezone] = useState("(GMT+03:00) Europe/Istanbul");
 
+  const addWebsiteHandler = async () => {
+    const response = await addWebsite({
+      domain: "www.datavisly.com",
+      name: "hello",
+    });
+    console.log(response);
+  };
   return (
     <div className="min-h-screen flex mt-8 justify-center bg-gray-900">
       <div className="w-full max-w-4xl px-4">
@@ -81,7 +89,10 @@ const AddWebsitePage = () => {
             </div>
           </div>
 
-          <button className="w-full cursor-pointer bg-orange-600 hover:bg-orange-700 text-white py-3 px-4 rounded-md font-medium transition-colors">
+          <button
+            className="w-full cursor-pointer bg-orange-600 hover:bg-orange-700 text-white py-3 px-4 rounded-md font-medium transition-colors"
+            onClick={addWebsiteHandler}
+          >
             Install Datavisly
           </button>
         </div>

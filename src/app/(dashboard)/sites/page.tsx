@@ -1,14 +1,22 @@
+"use client";
+import { getWebsSites } from "@/services/website/endpoints";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const SitesPage = () => {
-  const sites = [
-    {
-      id: 1,
-      url: "cusnsoft.xyz",
-      visitors: 0,
-      percentage: "0%",
-    },
-  ];
+  const [sites, setSites] = useState<
+    Array<{ id: string; domain: string; name: string }>
+  >([]);
+
+  const getWebsitesHandler = async () => {
+    const websites = await getWebsSites();
+    console.log(websites);
+    setSites(websites);
+  };
+
+  useEffect(() => {
+    getWebsitesHandler();
+  }, []);
 
   return (
     <div className="flex flex-col w-full max-w-6xl mx-auto px-4 py-8">
@@ -40,16 +48,16 @@ const SitesPage = () => {
       </div>
 
       {/* Site list area */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ">
         {sites.map((site) => (
-          <div
+          <Link
+            href={`${site.domain}`}
             key={site.id}
-            className="bg-gray-800 rounded-md p-4 hover:bg-gray-750 transition duration-200"
+            className="bg-gray-800 rounded-md hover:bg-gray-750 p-4 transition duration-200"
           >
             <div className="flex justify-between items-center mb-8">
-              <div className="flex items-center">
-                <Link href={"site"} className="h-5 w-5 text-gray-400 mr-2" />
-                <span className="text-white font-medium">{site.url}</span>
+              <div className="h-5 w-5 text-gray-400 ">
+                <span className="text-white font-medium">{site.name}</span>
               </div>
               <button className="text-gray-400 hover:text-white">
                 <svg
@@ -64,26 +72,8 @@ const SitesPage = () => {
                 </svg>
               </button>
             </div>
-
-            <div className="relative pt-2">
-              <div className="h-1 w-full bg-gray-700 rounded-full">
-                <div
-                  className="h-1 bg-blue-500 rounded-full"
-                  style={{ width: site.percentage }}
-                ></div>
-              </div>
-
-              <div className="flex justify-between items-center mt-2">
-                <div className="text-white">
-                  <span className="font-semibold">{site.visitors}</span>
-                  <span className="text-gray-400 ml-1">
-                    visitors in last 24h
-                  </span>
-                </div>
-                <div className="text-gray-400">~{site.percentage}</div>
-              </div>
-            </div>
-          </div>
+            <p>{site.domain}</p>
+          </Link>
         ))}
       </div>
     </div>
