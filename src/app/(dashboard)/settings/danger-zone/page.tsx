@@ -1,5 +1,19 @@
+"use client";
+import { deleteAccount } from "@/services/account/endpoints";
+import { logout } from "@/services/auth/endpoints";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
 const DangerZoreSettingPage = () => {
-  const showDeleteConfirmation = false;
+  const router = useRouter();
+  const [deleteModal, setDeleteModal] = useState<boolean>(false);
+
+  const deleteAccountHandler = async () => {
+    await deleteAccount();
+    await logout();
+    router.push("/");
+  };
+
   return (
     <>
       <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
@@ -51,8 +65,11 @@ const DangerZoreSettingPage = () => {
 
         <div className="border-t border-gray-700 my-6"></div>
 
-        {!showDeleteConfirmation ? (
-          <button className="border border-red-500 text-red-500 hover:bg-red-500 hover:bg-opacity-10 px-4 py-2 rounded-lg transition-colors">
+        {!deleteModal ? (
+          <button
+            onClick={() => setDeleteModal(true)}
+            className="cursor-pointer border border-red-500 text-red-500 hover:bg-red-500 hover:text-white px-4 py-2 rounded-lg transition-colors"
+          >
             Delete my account
           </button>
         ) : (
@@ -62,7 +79,10 @@ const DangerZoreSettingPage = () => {
               be undone.
             </p>
             <div className="flex space-x-4">
-              <button className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors">
+              <button
+                onClick={deleteAccountHandler}
+                className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors"
+              >
                 Yes, delete my account
               </button>
               <button className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition-colors">

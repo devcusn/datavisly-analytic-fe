@@ -20,7 +20,7 @@ const SitesPage = () => {
 
   return (
     <div className="flex flex-col w-full max-w-6xl mx-auto px-4 py-8">
-      {/* My Personal Sites header area */}
+      {/* My  Sites header area */}
       <div className="flex flex-col w-full mb-8">
         <h1 className="text-3xl font-bold text-white mb-4">My Sites</h1>
         <div className="h-px w-full bg-gray-700 mb-6"></div>

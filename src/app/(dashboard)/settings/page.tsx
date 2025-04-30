@@ -1,5 +1,7 @@
+import { redirect } from "next/navigation";
+
 const SettingPage = () => {
-  return <div className="w-full lg:w-3/4">{/* Name Change Section */}</div>;
+  redirect("/settings/profile");
 };
 
 export default SettingPage;
