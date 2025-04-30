@@ -28,12 +28,10 @@ const LoginPage: React.FunctionComponent = () => {
   };
 
   return (
-    <div className="flex justify-center  h-screen bg-gray-100 text-black">
+    <div className="flex justify-center  h-screen text-white">
       <div className="flex flex-col items-center w-full p-8  mt-12 ">
-        <h1 className="text-3xl text-gray-900 font-bold text-center mb-6">
-          Login
-        </h1>
-        <div className="w-full max-w-md  p-8 bg-white rounded-lg shadow-md">
+        <h1 className="text-3xl font-bold text-center mb-6">Login</h1>
+        <div className="w-full max-w-md  p-8 bg-gray-800/50 rounded-lg shadow-md">
           {error && (
             <div className="mb-4 p-3 bg-red-50 text-red-700 rounded-md">
               {error}
@@ -44,7 +42,7 @@ const LoginPage: React.FunctionComponent = () => {
             <div className="mb-4">
               <label
                 htmlFor="email"
-                className="block mb-2 text-sm font-medium text-gray-700"
+                className="block mb-2 text-sm font-medium "
               >
                 Email Address
               </label>
@@ -53,7 +51,7 @@ const LoginPage: React.FunctionComponent = () => {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-300"
+                className="w-full px-3 py-2 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-300"
                 required
               />
             </div>
@@ -61,7 +59,7 @@ const LoginPage: React.FunctionComponent = () => {
             <div className="mb-6">
               <label
                 htmlFor="password"
-                className="block mb-2 text-sm font-medium text-gray-700"
+                className="block mb-2 text-sm font-medium "
               >
                 Password
               </label>
@@ -70,7 +68,7 @@ const LoginPage: React.FunctionComponent = () => {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-300"
+                className="w-full px-3 py-2 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-300"
                 required
               />
             </div>
@@ -85,7 +83,7 @@ const LoginPage: React.FunctionComponent = () => {
           </form>
 
           <div className="flex mt-6">
-            <p className="text-sm  text-gray-600 w-full">
+            <p className="text-sm   w-full">
               Don&apos;t have an account?
               <Link
                 href="/sign-up"

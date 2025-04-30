@@ -1,4 +1,71 @@
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+
 const ResetPasswordPage = () => {
-  return <div>Reset Passsword Page</div>;
+  const [password, setPassword] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    // Handle password reset logic here
+    setIsSubmitting(false);
+  };
+
+  return (
+    <main className="flex-grow flex items-center justify-center p-24">
+      <div className="w-full max-w-xl p-8 rounded-lg bg-gray-800/50">
+        <h1 className="text-2xl font-bold mb-4">Reset your password</h1>
+
+        <form onSubmit={handleSubmit}>
+          <div className="mb-6">
+            <div className="text-sm text-gray-400 mb-2">Min 12 characters</div>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-4 py-3 bg-gray-900 rounded border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="New password"
+              minLength={12}
+              required
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={isSubmitting || password.length < 12}
+            className="w-full bg-indigo-500 hover:bg-indigo-600 disabled:opacity-70 py-3 rounded flex items-center justify-center gap-2"
+          >
+            Set password
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M5 12h14"></path>
+              <path d="M12 5l7 7-7 7"></path>
+            </svg>
+          </button>
+        </form>
+
+        <div className="text-center mt-6 text-sm text-gray-400">
+          Don&apos;t have an account?{" "}
+          <Link href="/register" className="text-indigo-400 hover:underline">
+            Register
+          </Link>{" "}
+          instead.
+        </div>
+      </div>
+    </main>
+  );
 };
+
 export default ResetPasswordPage;

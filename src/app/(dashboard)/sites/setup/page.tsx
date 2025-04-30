@@ -82,7 +82,7 @@ const AddWebsitePage = () => {
           </div>
 
           <button className="w-full cursor-pointer bg-orange-600 hover:bg-orange-700 text-white py-3 px-4 rounded-md font-medium transition-colors">
-            Install Plausible
+            Install Datavisly
           </button>
         </div>
       </div>
