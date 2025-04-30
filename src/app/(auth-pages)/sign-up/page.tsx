@@ -7,6 +7,7 @@ const SignUpPage: React.FunctionComponent = () => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -17,22 +18,21 @@ const SignUpPage: React.FunctionComponent = () => {
     setLoading(true);
 
     try {
-      const res = await registerUser({
+      await registerUser({
         fullName,
         email,
         password,
       });
-      console.log("Registration successful:", res);
     } catch (err) {
       console.error("Login error:", err);
-      setError("Invalid email or password");
+      setError((err as { response: { data: string } }).response.data);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="flex justify-center  h-screen bg-gray-100">
+    <div className="flex justify-center text-black  h-screen bg-gray-100">
       <div className="flex flex-col items-center w-full p-8  mt-12 ">
         <h1 className="text-3xl  font-bold text-gray-900  text-center mb-6">
           Register for free
@@ -57,7 +57,7 @@ const SignUpPage: React.FunctionComponent = () => {
                 type="text"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-300"
                 required
               />
             </div>
@@ -73,7 +73,7 @@ const SignUpPage: React.FunctionComponent = () => {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-300"
                 required
               />
             </div>
@@ -90,7 +90,7 @@ const SignUpPage: React.FunctionComponent = () => {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-300"
                 required
               />
             </div>
@@ -102,40 +102,19 @@ const SignUpPage: React.FunctionComponent = () => {
                 Confirm Password
               </label>
               <input
-                id="password"
+                id="confirm_password"
                 type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-300"
                 required
               />
-            </div>
-            <div className="mb-4 flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  id="remember"
-                  type="checkbox"
-                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                />
-                <label
-                  htmlFor="remember"
-                  className="ml-2 text-sm text-gray-700"
-                >
-                  Remember me
-                </label>
-              </div>
-              <Link
-                href="/forgot-password"
-                className="text-sm text-blue-600 hover:underline"
-              >
-                Forgot password?
-              </Link>
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors disabled:opacity-50"
+              className="w-full py-2 px-4 bg-orange-600 hover:bg-orange-700 text-white font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-orange-300 focus:ring-offset-2 transition-colors disabled:opacity-50"
             >
               Register
             </button>
@@ -143,9 +122,12 @@ const SignUpPage: React.FunctionComponent = () => {
 
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600">
-              Don&apos;t have an account?{" "}
-              <Link href="/sig-nup" className="text-blue-600 hover:underline">
-                Sign up
+              Already have an account?
+              <Link
+                href="/sig-nup"
+                className="text-orange-600 hover:underline ml-1"
+              >
+                Log in
               </Link>
             </p>
           </div>

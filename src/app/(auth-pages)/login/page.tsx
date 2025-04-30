@@ -17,8 +17,7 @@ const LoginPage: React.FunctionComponent = () => {
     setLoading(true);
 
     try {
-      const res = await loginUser({ email, password });
-      console.log(res);
+      await loginUser({ email, password });
       router.push("/sites");
     } catch (err) {
       console.log("Login error:", err);
@@ -29,7 +28,7 @@ const LoginPage: React.FunctionComponent = () => {
   };
 
   return (
-    <div className="flex justify-center  h-screen bg-gray-100">
+    <div className="flex justify-center  h-screen bg-gray-100 text-black">
       <div className="flex flex-col items-center w-full p-8  mt-12 ">
         <h1 className="text-3xl text-gray-900 font-bold text-center mb-6">
           Login
@@ -54,7 +53,7 @@ const LoginPage: React.FunctionComponent = () => {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-300"
                 required
               />
             </div>
@@ -71,49 +70,39 @@ const LoginPage: React.FunctionComponent = () => {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-300"
                 required
               />
-            </div>
-
-            <div className="mb-4 flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  id="remember"
-                  type="checkbox"
-                  className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                />
-                <label
-                  htmlFor="remember"
-                  className="ml-2 text-sm text-gray-700"
-                >
-                  Remember me
-                </label>
-              </div>
-              <Link
-                href="/forgot-password"
-                className="text-sm text-blue-600 hover:underline"
-              >
-                Forgot password?
-              </Link>
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors disabled:opacity-50"
+              className="w-full py-2 px-4 bg-orange-600 hover:bg-orange-700 text-white font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors disabled:opacity-50"
             >
               {loading ? "Logging in..." : "Log In"}
             </button>
           </form>
 
-          <div className="mt-6 text-center">
-            <p className="text-sm text-gray-600">
-              Already a member?
-              <Link href="/signup" className="text-blue-600 hover:underline">
-                Log In
+          <div className="flex mt-6">
+            <p className="text-sm  text-gray-600 w-full">
+              Don&apos;t have an account?
+              <Link
+                href="/sign-up"
+                className="text-orange-600 hover:underline mx-1"
+              >
+                Register
               </Link>
+              instead.
             </p>
+          </div>
+          <div>
+            <Link
+              href="/forgot-password"
+              className="text-sm text-orange-600 hover:underline min-w-fit"
+            >
+              Forgot password?
+            </Link>
           </div>
         </div>
       </div>
