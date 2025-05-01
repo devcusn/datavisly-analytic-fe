@@ -18,6 +18,7 @@ export const getWebsSites = async () => {
 export const checkSiteExists = async (siteName: string) => {
   try {
     const response = await request.get(`/website/exists/${siteName}`);
+
     return response.data;
   } catch (error) {
     console.error("Error checking if site exists:", error);
