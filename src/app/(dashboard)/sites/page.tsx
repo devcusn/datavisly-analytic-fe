@@ -56,7 +56,7 @@ const SitesPage = () => {
             className="bg-gray-800 rounded-md hover:bg-gray-750 p-4 transition duration-200"
           >
             <div className="flex justify-between items-center mb-8">
-              <div className="h-5 w-5 text-gray-400 ">
+              <div className="h-5  text-gray-400 ">
                 <span className="text-white font-medium">{site.name}</span>
               </div>
               <button className="text-gray-400 hover:text-white">

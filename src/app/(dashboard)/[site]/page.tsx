@@ -1,5 +1,7 @@
 "use client";
-
+import { useEffect } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { checkSiteExists, getSiteDetails } from "@/services/website/endpoints";
 import {
   LineChart,
   Line,
@@ -9,8 +11,35 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { ArrowUp, ArrowDown, RefreshCw, MapPin } from "lucide-react";
+// Define the site interface
 
 const AnalyticPage = () => {
+  const params = useParams();
+  const router = useRouter();
+
+  const siteName = params.site as string;
+
+  useEffect(() => {
+    const verifySite = async () => {
+      try {
+        const { exists } = await checkSiteExists(siteName);
+        if (!exists) {
+          router.push("/");
+          return;
+        }
+        const detail = await getSiteDetails(siteName);
+        console.log(detail);
+      } catch (error) {
+        console.error("Error verifying site:", error);
+      } finally {
+      }
+    };
+
+    if (siteName) {
+      verifySite();
+    }
+  }, [siteName, router]);
+
   // Örnek veri
   const chartData = [
     { name: "25 Mar", value: 6000 },
