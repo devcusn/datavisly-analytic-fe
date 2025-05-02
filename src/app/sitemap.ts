@@ -14,7 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     return {
       url: domain + page.url,
       lastModified: new Date(),
-      changeFrequency: "yearly",
+      changeFrequency: "monthly",
       priority: page.url === "" ? 1 : 0.8,
     };
   });
