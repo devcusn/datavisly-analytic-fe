@@ -10,7 +10,7 @@ const SitesPage = () => {
 
   const getWebsitesHandler = async () => {
     const websites = await getWebsSites();
-    console.log(websites);
+
     setSites(websites);
   };
 

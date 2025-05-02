@@ -4,10 +4,12 @@ import Image from "next/image";
 import Logo from "@/assets/img/logo.png";
 import Link from "next/link";
 import LogoutButton from "./LogutButton";
+import useCurrentUser from "@/hooks/useCurrentUser";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const { user } = useCurrentUser();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -37,15 +39,15 @@ const Header = () => {
       <div className="flex gap-4 relative text-sm" ref={dropdownRef}>
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="shadow border border-gray-600 px-8 py-2 text-sm text-white font-semibold  rounded hover:bg-gray-600 cursor-pointer"
+          className="shadow border border-gray-600 px-8 py-2 text-sm text-white font-semibold rounded hover:bg-gray-600 cursor-pointer"
         >
-          Halil
+          {user?.name}
         </button>
         {isOpen && (
           <div className="absolute right-0 mt-12 w-48 bg-slate-800 rounded shadow-lg py-1 z-10 border border-slate-700">
             <div className="px-4 py-3 border-b border-slate-700">
               <p className="text-sm text-slate-400">Signed in as</p>
-              <p className="text-white">halibtunc@gmail.com</p>
+              <span>{user?.email}</span>
             </div>
 
             <Link href="/settings">

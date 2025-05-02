@@ -4,7 +4,7 @@ import { useState } from "react";
 import { updateName } from "@/services/account/endpoints";
 
 const ProfileSettingPage = () => {
-  const [name, setName] = useState("halil");
+  const [name, setName] = useState("user?.name");
   const [isLoading, setIsLoading] = useState(false);
 
   const handleUpdateName = async () => {

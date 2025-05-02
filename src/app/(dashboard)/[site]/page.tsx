@@ -20,12 +20,12 @@ async function getPageData(siteName: string) {
 export default async function AnalyticPage({
   params,
 }: {
-  params: { site: string };
+  params: Promise<{ site: string }>;
 }) {
-  const siteName = params.site;
+  const param = await params;
 
   // Fetch data server-side with proper cookie handling
-  const siteData = await getPageData(siteName);
+  const siteData = await getPageData(param.site);
 
   // If site doesn't exist, show 404
   if (!siteData) {
