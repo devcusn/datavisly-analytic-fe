@@ -16,11 +16,12 @@ const Layout: React.FunctionComponent<Readonly<LayoutProps>> = ({
         <Link href="/">
           <div className="flex items-center text-2xl font-bold cursor-pointer">
             <Image width={60} src={Logo} alt="logo" />
-            Datavisly | CSV Viewer
+            Datavisly |{" "}
+            <span className="text-lg text-gray-400 ml-2">CSV Viewer</span>
           </div>
         </Link>
       </div>
-      <div className="max-w-6xl mx-auto  h-screen">{children}</div>
+      <div className="max-w-6xl mx-auto  min-h-screen">{children}</div>
       <Footer />
     </div>
   );

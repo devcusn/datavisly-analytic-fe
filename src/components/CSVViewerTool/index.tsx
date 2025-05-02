@@ -1,7 +1,12 @@
 "use client";
 
-import { useState, ChangeEvent, useMemo } from "react";
+import { useState, useMemo } from "react";
 import Papa from "papaparse";
+import FileUploader from "./FileUploader";
+import TableView from "./TableView";
+import Pagination from "./Pagination";
+import SearchBar from "./SearchBar";
+import DataVisualizer from "./DataVisualizer";
 
 interface CSVData {
   data: string[][];
@@ -18,8 +23,7 @@ export default function CSVViewerTool() {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [rowsPerPage, setRowsPerPage] = useState<number>(10);
 
-  const handleFileUpload = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+  const handleFileUpload = (file: File) => {
     if (!file) return;
 
     setFileName(file.name);
@@ -79,25 +83,13 @@ export default function CSVViewerTool() {
     document.body.removeChild(link);
   };
 
+  const headers = csvData?.data[0] || [];
+
   return (
-    <div className="container mx-auto px-4 py-2">
-      <div className="mb-8">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Upload CSV File
-        </label>
-        <div className="flex items-center">
-          <label className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded cursor-pointer">
-            Choose File
-            <input
-              type="file"
-              accept=".csv"
-              onChange={handleFileUpload}
-              className="hidden"
-            />
-          </label>
-          {fileName && <span className="ml-3 text-gray-500">{fileName}</span>}
-        </div>
-      </div>
+    <div className="container mx-auto px-4 py-2 bg-gray-800/50 ">
+      {!fileName && (
+        <FileUploader onFileUpload={handleFileUpload} fileName={fileName} />
+      )}
 
       {isLoading && (
         <div className="flex items-center justify-center my-8">
@@ -114,29 +106,22 @@ export default function CSVViewerTool() {
 
       {csvData && csvData.data.length > 0 && (
         <>
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 gap-4">
-            <div className="flex items-center">
-              <input
-                type="text"
-                placeholder="Search data..."
-                value={searchTerm}
-                onChange={(e) => {
-                  setSearchTerm(e.target.value);
-                  setCurrentPage(1);
-                }}
-                className="border rounded px-3 py-2 w-full md:w-64 text-white border-white"
-              />
-              {searchTerm && (
-                <button
-                  onClick={() => setSearchTerm("")}
-                  className="ml-2 text-gray-500 hover:text-gray-700"
-                >
-                  Clear
-                </button>
-              )}
-            </div>
+          <div className="flex justify-between items-center mb-4 mt-6">
+            <button
+              onClick={handleDownloadCSV}
+              className="bg-green-500 hover:bg-green-600 text-white py-1 px-3 rounded"
+            >
+              Download CSV
+            </button>
+          </div>
 
-            <div className="flex items-center gap-4">
+          <>
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 gap-4">
+              <SearchBar
+                searchTerm={searchTerm}
+                setSearchTerm={setSearchTerm}
+                setCurrentPage={setCurrentPage}
+              />
               <div className="flex items-center">
                 <label htmlFor="rowsPerPage" className="mr-2 text-sm">
                   Rows:
@@ -156,111 +141,26 @@ export default function CSVViewerTool() {
                   <option value={100}>100</option>
                 </select>
               </div>
-
-              <button
-                onClick={handleDownloadCSV}
-                className="bg-green-500 hover:bg-green-600 text-white py-1 px-3 rounded"
-              >
-                Download CSV
-              </button>
             </div>
-          </div>
 
-          <div className="overflow-x-auto border rounded">
-            <table className="min-w-full bg-white">
-              <thead>
-                <tr className="bg-gray-100">
-                  {csvData.data[0].map((header, index) => (
-                    <th
-                      key={index}
-                      className="py-2 px-4 border-b text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
-                    >
-                      {header || `Column ${index + 1}`}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {paginatedData.length > 0 ? (
-                  paginatedData.map((row, rowIndex) => (
-                    <tr
-                      key={rowIndex}
-                      className={rowIndex % 2 === 0 ? "bg-gray-50" : ""}
-                    >
-                      {row.map((cell, cellIndex) => (
-                        <td
-                          key={cellIndex}
-                          className="py-2 px-4 border-b text-sm text-black"
-                        >
-                          {cell}
-                        </td>
-                      ))}
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td
-                      colSpan={csvData.data[0].length}
-                      className="py-4 px-4 text-center text-gray-500"
-                    >
-                      No results found.
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
+            <TableView
+              headers={headers}
+              data={paginatedData}
+              filteredDataLength={filteredData.length}
+            />
 
-          {/* Pagination */}
-          {totalPages > 1 && (
-            <div className="flex justify-between items-center mt-4">
-              <div className="text-sm text-gray-500">
-                Showing{" "}
-                {Math.min(
-                  filteredData.length,
-                  (currentPage - 1) * rowsPerPage + 1
-                )}
-                -{Math.min(filteredData.length, currentPage * rowsPerPage)}
-                of {filteredData.length} rows
-              </div>
+            {totalPages > 1 && (
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                setCurrentPage={setCurrentPage}
+                filteredData={filteredData}
+                rowsPerPage={rowsPerPage}
+              />
+            )}
+          </>
 
-              <div className="flex items-center space-x-2">
-                <button
-                  onClick={() => setCurrentPage(1)}
-                  disabled={currentPage === 1}
-                  className="px-2 py-1 border rounded text-sm disabled:opacity-50"
-                >
-                  First
-                </button>
-                <button
-                  onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                  disabled={currentPage === 1}
-                  className="px-2 py-1 border rounded text-sm disabled:opacity-50"
-                >
-                  Previous
-                </button>
-                <span className="text-sm">
-                  Page {currentPage} of {totalPages}
-                </span>
-                <button
-                  onClick={() =>
-                    setCurrentPage((p) => Math.min(totalPages, p + 1))
-                  }
-                  disabled={currentPage === totalPages}
-                  className="px-2 py-1 border rounded text-sm disabled:opacity-50"
-                >
-                  Next
-                </button>
-                <button
-                  onClick={() => setCurrentPage(totalPages)}
-                  disabled={currentPage === totalPages}
-                  className="px-2 py-1 border rounded text-sm disabled:opacity-50"
-                >
-                  Last
-                </button>
-              </div>
-            </div>
-          )}
+          <DataVisualizer data={csvData.data} headers={headers} />
         </>
       )}
 
