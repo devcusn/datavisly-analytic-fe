@@ -7,6 +7,7 @@ const PUBLIC_ROUTES = [
   "/sign-up",
   "/forgot-password",
   "/reset-password",
+  "/tools",
 ];
 
 export function middleware(req: NextRequest) {
@@ -22,7 +23,7 @@ export function middleware(req: NextRequest) {
         return NextResponse.redirect(new URL("/", req.url));
       }
     } else {
-      if (token) {
+      if (token && req.nextUrl.pathname !== "/tools") {
         return NextResponse.redirect(new URL("/sites", req.url));
       }
     }

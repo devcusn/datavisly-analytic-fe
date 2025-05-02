@@ -2,7 +2,13 @@ import type { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const domain = "https://www.datavisly.com";
-  const pageUrls = [{ url: "" }, { url: "/login" }, { url: "/sign-up" }];
+  const pageUrls = [
+    { url: "" },
+    { url: "/login" },
+    { url: "/sign-up" },
+    { url: "/tools" },
+    { url: "/tools/csv-viewer" },
+  ];
 
   return pageUrls.map((page) => {
     return {
