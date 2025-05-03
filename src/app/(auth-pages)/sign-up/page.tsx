@@ -13,7 +13,6 @@ const SignUpPage: React.FunctionComponent = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", { fullName, email, password });
     setError("");
     setLoading(true);
 

@@ -7,7 +7,7 @@ const VerifyPage = () => {
     <div className="min-h-screen flex mt-8 bg-gray-900">
       <div className="w-full max-w-6xl px-4 mx-auto flex flex-col md:flex-row gap-8">
         {/* Progress steps - vertical */}
-        <WebsiteCreateStepper />
+        <WebsiteCreateStepper activeStep="verify" />
         {/* Main content */}
         <div className="w-full md:w-2/3">
           <div className="bg-gray-800 rounded-lg p-8">

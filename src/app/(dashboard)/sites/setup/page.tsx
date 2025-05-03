@@ -2,22 +2,62 @@
 import WebsiteCreateStepper from "@/components/Stepper";
 import { addWebsite } from "@/services/website/endpoints";
 import { useState } from "react";
-
+import { ChangeEvent } from "react";
+import { useRouter } from "next/navigation";
 const AddWebsitePage = () => {
   const [domain, setDomain] = useState("");
   const [name, setName] = useState("");
-  const addWebsiteHandler = async () => {
-    const response = await addWebsite({
-      domain: domain,
-      name: name,
-    });
-    console.log(response);
+  const [domainError, setDomainError] = useState("");
+  const router = useRouter();
+  const validateDomain = (value: string): boolean => {
+    const domainRegex =
+      /^([a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$/;
+
+    if (!value) {
+      setDomainError("Domain is required");
+      return false;
+    }
+
+    if (value.includes("http") || value.includes("https")) {
+      setDomainError("Please don't include http:// or https://");
+      return false;
+    }
+
+    if (value.startsWith("www.")) {
+      setDomainError("Please don't include www.");
+      return false;
+    }
+
+    if (!domainRegex.test(value)) {
+      setDomainError("Please enter a valid domain format");
+      return false;
+    }
+
+    setDomainError("");
+    return true;
   };
+
+  const handleDomainChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setDomain(value);
+    validateDomain(value);
+  };
+
+  const addWebsiteHandler = async () => {
+    if (validateDomain(domain) && name) {
+      await addWebsite({
+        domain: domain,
+        name: name,
+      });
+      router.push(`/${domain}/installation`);
+    }
+  };
+
   return (
     <div className="min-h-screen flex mt-8 bg-gray-900">
       <div className="w-full max-w-4xl px-4 mx-auto flex flex-col md:flex-row gap-8">
         {/* Progress steps - now vertical */}
-        <WebsiteCreateStepper />
+        <WebsiteCreateStepper activeStep="setup" />
 
         {/* Form card */}
         <div className="w-full md:w-2/3">
@@ -47,9 +87,17 @@ const AddWebsitePage = () => {
                 type="text"
                 placeholder="example.com"
                 value={domain}
-                onChange={(e) => setDomain(e.target.value)}
-                className="w-full bg-gray-900 border border-gray-700 rounded-md p-3 text-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                onChange={handleDomainChange}
+                className={`w-full bg-gray-900 border ${
+                  domainError ? "border-red-500" : "border-gray-700"
+                } rounded-md p-3 text-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500`}
               />
+              {domainError && (
+                <p className="mt-1 text-red-500 text-sm">{domainError}</p>
+              )}
+              <p className="mt-2 text-gray-400 text-sm">
+                Valid examples: domain.com, help.domain.com
+              </p>
             </div>
 
             <button

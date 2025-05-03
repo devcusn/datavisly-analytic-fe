@@ -1,14 +1,9 @@
-import { notFound, redirect } from "next/navigation";
-import { checkSiteExists, getSiteDetails } from "@/services/website/endpoints";
+import { redirect } from "next/navigation";
+import { getSiteDetails } from "@/services/website/endpoints";
 import AnalyticsClient from "./AnalyticsClient";
 
 async function getPageData(siteName: string) {
   try {
-    const { exists } = await checkSiteExists(siteName);
-
-    if (!exists) {
-      return null;
-    }
     const detail = await getSiteDetails(siteName);
     return detail;
   } catch (error) {
@@ -22,17 +17,14 @@ export default async function AnalyticPage({
 }: {
   params: Promise<{ site: string }>;
 }) {
+  // Fetch site data for this specific page
   const param = await params;
-
-  // Fetch data server-side with proper cookie handling
   const siteData = await getPageData(param.site);
 
+  // Check if site is approved, if not redirect to installation
+
   if (siteData && !siteData.is_approved) {
-    redirect("/sites/installation");
-  }
-  // If site doesn't exist, show 404
-  if (!siteData) {
-    notFound();
+    redirect(`/${param.site}/installation`);
   }
 
   return <AnalyticsClient siteData={siteData} />;
