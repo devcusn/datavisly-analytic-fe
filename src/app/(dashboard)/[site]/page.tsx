@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { checkSiteExists, getSiteDetails } from "@/services/website/endpoints";
 import AnalyticsClient from "./AnalyticsClient";
 
@@ -27,6 +27,9 @@ export default async function AnalyticPage({
   // Fetch data server-side with proper cookie handling
   const siteData = await getPageData(param.site);
 
+  if (siteData && !siteData.is_approved) {
+    redirect("/sites/installation");
+  }
   // If site doesn't exist, show 404
   if (!siteData) {
     notFound();
