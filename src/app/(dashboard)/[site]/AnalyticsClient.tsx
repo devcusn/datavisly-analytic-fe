@@ -9,11 +9,15 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { ArrowUp, ArrowDown, RefreshCw, MapPin } from "lucide-react";
+import { useEffect, useState } from "react";
+
+import { AnalyticResult, getAnalytic } from "@/services/analytic/endpoints";
 
 interface SiteData {
   id: string;
   name: string;
   url: string;
+  domain: string;
 }
 
 interface AnalyticsClientProps {
@@ -22,6 +26,13 @@ interface AnalyticsClientProps {
 
 export default function AnalyticsClient({ siteData }: AnalyticsClientProps) {
   console.log("Site details:", siteData);
+  const [data, setData] = useState<AnalyticResult>();
+
+  useEffect(() => {
+    getAnalytic(siteData.domain).then((res) => {
+      setData(res);
+    });
+  }, [siteData.domain]);
 
   const chartData = [
     { name: "25 Mar", value: 6000 },
@@ -64,18 +75,7 @@ export default function AnalyticsClient({ siteData }: AnalyticsClientProps) {
     { name: "metisprivatist.no", icon: "🔵", visitors: "1.4k" },
   ];
 
-  const pages = [
-    { path: "/", visitors: "165k" },
-    { path: "/analytic", visitors: "100.4k" },
-    { path: "/login", visitors: "32.9k" },
-    { path: "/signup", visitors: "14.3k" },
-    { path: "/share/:dashboard", visitors: "9k" },
-    { path: "/dashboard/settings/general", visitors: "7.2k" },
-    { path: "/register", visitors: "6.2k" },
-    { path: "/plausible.io", visitors: "5.2k" },
-    { path: "/settings/preferences", visitors: "5.1k" },
-  ];
-
+  const pages = data?.page_views;
   const browsers = [
     { name: "Chrome", icon: "🌐", visitors: "150k", percentage: "59.3%" },
     { name: "Safari", icon: "🌐", visitors: "70.5k", percentage: "27.8%" },
@@ -84,28 +84,6 @@ export default function AnalyticsClient({ siteData }: AnalyticsClientProps) {
     { name: "Mobile App", icon: "📱", visitors: "3k", percentage: "1.2%" },
     { name: "not set", icon: "❓", visitors: "2k", percentage: "0.8%" },
     { name: "Opera", icon: "🌐", visitors: "1.2k", percentage: "0.5%" },
-  ];
-
-  const goals = [
-    { name: "Scroll to Goals", uniques: "75.2k", total: "-", cr: "29.7%" },
-    {
-      name: "Deep scroll - homepage",
-      uniques: "15.2k",
-      total: "-",
-      cr: "6.02%",
-    },
-    { name: "Visit /register", uniques: "6.2k", total: "8.4k", cr: "2.46%" },
-    { name: "Visit /blog*", uniques: "4.9k", total: "7.1k", cr: "1.97%" },
-    { name: "Add a site", uniques: "4k", total: "5.6k", cr: "1.61%" },
-    { name: "Visit /activate", uniques: "2.8k", total: "3.7k", cr: "1.13%" },
-    { name: "Sign up for a trial", uniques: "2k", total: "2.1k", cr: "0.82%" },
-    { name: "Scroll /blog* 50%", uniques: "1.9k", total: "-", cr: "0.77%" },
-    {
-      name: "Sign up via invitation",
-      uniques: "669",
-      total: "680",
-      cr: "0.26%",
-    },
   ];
 
   return (
@@ -233,12 +211,12 @@ export default function AnalyticsClient({ siteData }: AnalyticsClientProps) {
                   <div>Page</div>
                   <div>Visitors</div>
                 </div>
-                {pages.map((page, index) => (
+                {pages?.map((page, index) => (
                   <div
                     key={index}
                     className="flex items-center justify-between py-2 text-sm"
                   >
-                    <div className="truncate max-w-md">{page.path}</div>
+                    <div className="truncate max-w-md">{page.page}</div>
                     <div className="font-medium">{page.visitors}</div>
                   </div>
                 ))}
@@ -357,23 +335,7 @@ export default function AnalyticsClient({ siteData }: AnalyticsClientProps) {
                   <span className="w-24 text-right">CR</span>
                 </div>
               </div>
-              {goals.map((goal, index) => (
-                <div
-                  key={index}
-                  className="flex items-center justify-between py-2 text-sm"
-                >
-                  <div>{goal.name}</div>
-                  <div className="flex items-center space-x-6">
-                    <span className="font-medium w-24 text-right">
-                      {goal.uniques}
-                    </span>
-                    <span className="w-24 text-right">{goal.total}</span>
-                    <span className="text-gray-400 w-24 text-right">
-                      {goal.cr}
-                    </span>
-                  </div>
-                </div>
-              ))}
+
               <div className="mt-4 text-center">
                 <button className="text-indigo-400 text-sm hover:text-indigo-300 inline-flex items-center">
                   <RefreshCw size={14} className="mr-1" /> DETAILS
