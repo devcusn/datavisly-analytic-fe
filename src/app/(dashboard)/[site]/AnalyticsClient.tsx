@@ -24,8 +24,6 @@ export default async function AnalyticsClient({
 }: AnalyticsClientProps) {
   const data: AnalyticResult = await getAnalytic(siteData.domain);
 
-  console.log("patates", data);
-
   const chartData = [
     { name: "25 Mar", value: 6000 },
     { name: "30 Apr", value: 12000 },
@@ -106,7 +104,9 @@ export default async function AnalyticsClient({
             <div className="font-semibold text-md">{siteData.domain}</div>
             <div className="flex min-w-fit items-center gap-1 text-green-500 ml-2">
               <div className="h-2 w-2 bg-green-500 rounded-full"></div>
-              <div className="text-sm font-extrabold">89 current visitors</div>
+              <div className="text-sm font-extrabold">
+                {data.currentVisitors} current visitors
+              </div>
             </div>
             <div className="flex items-center gap-4 w-full justify-end"></div>
           </div>

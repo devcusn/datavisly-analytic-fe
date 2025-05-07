@@ -10,6 +10,7 @@ export type AnalyticResult = {
     devices: Array<{ name: string; count: number }>;
     devices_type: Array<{ name: string; count: number }>;
   };
+  currentVisitors: number;
 };
 export const getAnalytic = async (domain: string): Promise<AnalyticResult> => {
   const response = await request.get("collect", {
