@@ -55,7 +55,7 @@ export default async function AnalyticsClient({
     },
     {
       title: "VIEWS PER VISIT",
-      value: "3.16",
+      value: data.viewsPerVisit,
       change: "-5%",
       direction: "down",
     },
@@ -63,18 +63,10 @@ export default async function AnalyticsClient({
     { title: "VISIT DURATION", value: "6m 12s", change: "1%", direction: "up" },
   ];
 
-  const sources = [
-    { name: "Direct / None", icon: "🔗", visitors: "218k" },
-    { name: "GitHub", icon: "🐙", visitors: "1.4k" },
-    { name: "DuckDuckGo", icon: "🦆", visitors: "666" },
-    { name: "Bing", icon: "🔎", visitors: "541" },
-    { name: "Reddit", icon: "🤖", visitors: "535" },
-    { name: "Google", icon: "🔍", visitors: "17.9k" },
-    { name: "docenten.dk", icon: "📄", visitors: "4.3k" },
-    { name: "chatgpt.com", icon: "💬", visitors: "2.3k" },
-    { name: "metisprivatist.no", icon: "🔵", visitors: "1.4k" },
-  ];
-
+  const sources = data.referrers.map((r) => ({
+    name: r.source,
+    visitors: r.count,
+  }));
   const pages = data?.page_views;
 
   const browsers = data.devices.browsers.map((b) => ({

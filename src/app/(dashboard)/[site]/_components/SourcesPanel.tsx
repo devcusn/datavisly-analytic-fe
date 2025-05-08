@@ -4,7 +4,6 @@ import { RefreshCw } from "lucide-react";
 
 interface SourceItem {
   name: string;
-  icon: string;
   visitors: string;
 }
 
@@ -42,7 +41,6 @@ export default function SourcesPanel({ sources }: SourcesPanelProps) {
             className="flex items-center justify-between py-2 text-sm"
           >
             <div className="flex items-center">
-              <span className="mr-2">{source.icon}</span>
               <span>{source.name}</span>
             </div>
             <div className="font-medium">{source.visitors}</div>
