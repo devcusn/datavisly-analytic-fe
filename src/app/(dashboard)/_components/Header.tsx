@@ -1,7 +1,7 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import Logo from "@/assets/img/icon.svg";
+import Logo from "@/assets/img/logo.svg";
 import Link from "next/link";
 import LogoutButton from "./LogutButton";
 import useCurrentUser from "@/hooks/useCurrentUser";
@@ -32,7 +32,6 @@ const Header = () => {
       <Link href="/">
         <div className="flex items-center text-2xl font-bold cursor-pointer gap-2">
           <Image width={35} src={Logo} alt="logo" />
-          Datavisly
         </div>
       </Link>
 

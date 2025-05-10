@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Logo from "@/assets/img/icon.svg";
+import Logo from "@/assets/img/logo.svg";
 import Link from "next/link";
 
 const Header = () => {
@@ -8,7 +8,6 @@ const Header = () => {
       <Link href="/">
         <div className="flex items-center text-2xl font-bold cursor-pointer gap-2">
           <Image height={35} src={Logo} alt="logo" />
-          Datavisly
         </div>
       </Link>
 
