@@ -4,7 +4,7 @@ import { RefreshCw } from "lucide-react";
 
 interface SourceItem {
   name: string;
-  visitors: string;
+  visitors: number;
 }
 
 interface SourcesPanelProps {
