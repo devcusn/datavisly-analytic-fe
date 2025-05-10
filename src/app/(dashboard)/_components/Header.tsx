@@ -1,7 +1,7 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import Logo from "@/assets/img/logo.png";
+import Logo from "@/assets/img/icon.svg";
 import Link from "next/link";
 import LogoutButton from "./LogutButton";
 import useCurrentUser from "@/hooks/useCurrentUser";
@@ -30,8 +30,8 @@ const Header = () => {
   return (
     <div className="max-w-6xl flex items-center mx-auto justify-between py-6 text-white">
       <Link href="/">
-        <div className="flex items-center text-2xl font-bold cursor-pointer">
-          <Image width={60} src={Logo} alt="logo" />
+        <div className="flex items-center text-2xl font-bold cursor-pointer gap-2">
+          <Image width={35} src={Logo} alt="logo" />
           Datavisly
         </div>
       </Link>
