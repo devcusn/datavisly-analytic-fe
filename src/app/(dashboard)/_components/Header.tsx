@@ -31,7 +31,7 @@ const Header = () => {
     <div className="max-w-6xl flex items-center mx-auto justify-between py-6 text-white">
       <Link href="/">
         <div className="flex items-center text-2xl font-bold cursor-pointer gap-2">
-          <Image width={35} src={Logo} alt="logo" />
+          <Image height={35} src={Logo} alt="logo" />
         </div>
       </Link>
 
