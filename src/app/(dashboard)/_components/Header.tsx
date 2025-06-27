@@ -4,12 +4,12 @@ import Image from "next/image";
 import Logo from "@/assets/img/logo.svg";
 import Link from "next/link";
 import LogoutButton from "./LogutButton";
-import useCurrentUser from "@/hooks/useCurrentUser";
+import { useAuth } from "@/context/AuthContext";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
-  const { user } = useCurrentUser();
+  const { user } = useAuth();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

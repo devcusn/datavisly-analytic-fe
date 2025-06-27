@@ -10,12 +10,10 @@ import React, {
   useCallback,
 } from "react";
 
-// Define user type
 export interface User {
   id: string;
   email: string;
   name?: string;
-  // Add other user properties as needed
 }
 
 interface AuthContextType {
@@ -26,10 +24,8 @@ interface AuthContextType {
   updateUser: (userData: Partial<User>) => void;
 }
 
-// Create the context with a default value
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// Custom hook to use the auth context
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {
@@ -42,7 +38,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Load user from localStorage on initial render
   useEffect(() => {
     const loadUser = () => {
       try {
@@ -60,14 +55,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     loadUser();
   }, []);
 
-  // Save user to localStorage whenever it changes
   useEffect(() => {
     if (user) {
       localStorage.setItem("user", JSON.stringify(user));
     }
   }, [user]);
 
-  // Memoize the functions to prevent recreation on each render
   const login = useCallback((userData: User) => {
     setUser(userData);
   }, []);

@@ -21,23 +21,18 @@ function AuthInitializer({ children }: { children: ReactNode }) {
 
     const initAuth = async () => {
       try {
-        // Try to fetch current user using auth cookie
         const userData = await getCurrentUser();
 
-        // Prevent state updates if component unmounted
         if (!isMounted) return;
 
         if (userData) {
-          // If user data exists, update context
           login(userData);
         } else {
-          // If no user data, clear any stale state
           logout();
         }
       } catch (error) {
         if (!isMounted) return;
         console.error("Error during auth initialization:", error);
-        // On error, clear auth state to be safe
         logout();
       }
     };
