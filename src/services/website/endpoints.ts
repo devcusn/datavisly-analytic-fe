@@ -26,7 +26,16 @@ export const checkSiteExists = async (siteName: string) => {
   }
 };
 
-export const getSiteDetails = async (siteName: string) => {
+export type SiteData = {
+  id: string;
+  domain: string;
+  name: string;
+  is_approved: boolean;
+  created_at: string;
+  updated_at: string;
+  url: string;
+};
+export const getSiteDetails = async (siteName: string): Promise<SiteData> => {
   const response = await request.get(`/website/${siteName}`);
   return response.data;
 };

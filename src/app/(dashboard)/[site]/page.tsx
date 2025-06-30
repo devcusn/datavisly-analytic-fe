@@ -17,11 +17,9 @@ export default async function AnalyticPage({
 }: {
   params: Promise<{ site: string }>;
 }) {
-  // Fetch site data for this specific page
   const param = await params;
-  const siteData = await getPageData(param.site);
 
-  // Check if site is approved, if not redirect to installation
+  const siteData = await getPageData(param.site);
 
   if (siteData && !siteData.is_approved) {
     redirect(`/${param.site}/installation`);

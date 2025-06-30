@@ -1,5 +1,5 @@
 (function () {
-  const endpoint = "https://api.datavisly.com/api/v1/collect";
+  const endpoint = "http://localhost:4005/api/v1/collect";
 
   function sendEvent(data) {
     const payload = {

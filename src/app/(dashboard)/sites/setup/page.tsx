@@ -23,11 +23,6 @@ const AddWebsitePage = () => {
       return false;
     }
 
-    if (value.startsWith("www.")) {
-      setDomainError("Please don't include www.");
-      return false;
-    }
-
     if (!domainRegex.test(value)) {
       setDomainError("Please enter a valid domain format");
       return false;
@@ -81,7 +76,7 @@ const AddWebsitePage = () => {
             <div className="mb-6">
               <label className="block text-white mb-1">Domain</label>
               <div className="text-gray-400 text-sm mb-2">
-                Just the naked domain or subdomain without www https etc.
+                Just the naked domain or subdomain without https etc.
               </div>
               <input
                 type="text"

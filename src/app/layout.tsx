@@ -36,7 +36,7 @@ export default function RootLayout({
         {children}
       </body>
       <Script
-        data-domain="datavisly.com"
+        data-domain="www.datavisly.com"
         src="https://www.datavisly.com/js/analytic.js"
       ></Script>
     </html>
