@@ -1,5 +1,5 @@
 (function () {
-  const endpoint = "http://localhost:4005/api/v1/collect";
+  const endpoint = "https://api.datavisly.com/api/v1/collect";
 
   function sendEvent(data) {
     const payload = {
@@ -40,10 +40,8 @@
     sendEvent(eventData);
   }
 
-  // İlk sayfa yüklemesinde event gönder
   trackPageView();
 
-  // SPA (Single Page Application) için URL değişikliği algılama
   let currentUrl = window.location.href;
 
   function checkUrlChange() {
@@ -53,7 +51,6 @@
     }
   }
 
-  // History API değişikliklerini dinle (pushState/replaceState)
   const originalPushState = history.pushState;
   const originalReplaceState = history.replaceState;
 
@@ -67,24 +64,20 @@
     setTimeout(checkUrlChange, 0);
   };
 
-  // Popstate olayını dinle (geri/ileri butonları)
   window.addEventListener("popstate", function () {
     setTimeout(checkUrlChange, 0);
   });
 
-  // Hash değişikliklerini dinle (# ile başlayan URL'ler)
   window.addEventListener("hashchange", function () {
     setTimeout(checkUrlChange, 0);
   });
 
-  // Sayfa görünürlük değişikliklerini dinle
   document.addEventListener("visibilitychange", function () {
     if (document.visibilityState === "visible") {
       checkUrlChange();
     }
   });
 
-  // Sayfa geri yüklendiğinde (bfcache)
   window.addEventListener("pageshow", function (event) {
     if (event.persisted) {
       checkUrlChange();
